@@ -19,6 +19,18 @@ export async function getStaticProps() {
   const jsonData = await fs.readFile(filePath);
   const data = JSON.parse(jsonData);
 
+  if (!data) { // redirect if unknown event happens
+    return {
+      redirect: '/failed'
+    }
+  }
+
+  if (data.products.length === 0) { // show not found if data is emtpy or not present
+    return {
+      notFound: true
+    }
+  }
+
   return {
     props: {
       products: data.products
