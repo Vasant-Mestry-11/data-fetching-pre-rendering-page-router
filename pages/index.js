@@ -14,7 +14,7 @@ export default function Home(props) {
 
 
 export async function getStaticProps() {
-
+  console.log('(Re)Generating....')
   const filePath = path.join(process.cwd(), 'data', 'dummy-backend.json');
   const jsonData = await fs.readFile(filePath);
   const data = JSON.parse(jsonData);
@@ -22,6 +22,7 @@ export async function getStaticProps() {
   return {
     props: {
       products: data.products
-    }
+    },
+    revalidate: 5 // Incremental Static Generation
   }
 }
