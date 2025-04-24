@@ -2,12 +2,14 @@
 
 export default function UserProfilePage(props) {
 
-  const {username} = props
+  const { username } = props
   return <h1>{username}</h1>
 }
 
 
 export async function getServerSideProps(context) {
+  const { params, req, res } = context;
+
   return {
     props: {
       username: 'Max'
