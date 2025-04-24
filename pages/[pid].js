@@ -2,6 +2,11 @@ import path from "path";
 import fs from "fs/promises";
 
 export default function ProductDetailPage({ loadedProduct }) {
+
+  // if (!loadedProduct) {
+  //   return <h1>Loading....</h1>
+  // }
+
   const { title, description } = loadedProduct;
 
   return (
@@ -37,17 +42,18 @@ export async function getStaticPaths() {
           pid: "p1",
         },
       },
-      {
-        params: {
-          pid: "p2",
-        },
-      },
-      {
-        params: {
-          pid: "p3",
-        },
-      },
+      // {
+      //   params: {
+      //     pid: "p2",
+      //   },
+      // },
+      // {
+      //   params: {
+      //     pid: "p3",
+      //   },
+      // },
     ],
-    fallback: false
+    // fallback: true
+    fallback: 'blocking'
   };
 }
