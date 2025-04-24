@@ -3,9 +3,9 @@ import fs from "fs/promises";
 
 export default function ProductDetailPage({ loadedProduct }) {
 
-  // if (!loadedProduct) {
-  //   return <h1>Loading....</h1>
-  // }
+  if (!loadedProduct) {
+    return <h1>Loading....</h1>
+  }
 
   const { title, description } = loadedProduct;
 
@@ -34,6 +34,12 @@ export async function getStaticProps(context) {
 
   const product = data.products.find((p) => p.id === productId);
 
+  if (!product) {
+    return {
+      notFound: true,
+    }
+  }
+  
   return {
     props: {
       loadedProduct: product,
@@ -48,8 +54,8 @@ export async function getStaticPaths() {
 
   return {
     paths: pathWithParams,
-    // fallback: true
+    fallback: true
     // fallback: 'blocking'
-    fallback: false,
+    // fallback: false,
   };
 }
