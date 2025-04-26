@@ -12,7 +12,6 @@ export default function LastSalesPage() {
   useEffect(() => {
 
     if (data) {
-      console.log(data)
       const transformedData = [];
       for (let key in data) {
         transformedData.push({ id: key, username: data[key].username, volume: data[key].volume })
@@ -21,7 +20,7 @@ export default function LastSalesPage() {
     }
   }, [data])
 
-  console.log(data, isLoading)
+  // console.log(data, isLoading)
 
   // useEffect(() => {
   //   // setIsLoading(true)
@@ -42,7 +41,7 @@ export default function LastSalesPage() {
     return <p>Failed to fetch sales</p>
   }
 
-  if (isLoading || !sales) {
+  if (!data && !sales) {
     return <p>Loading....</p>
   }
 
@@ -57,4 +56,22 @@ export default function LastSalesPage() {
   return (<ul>
     {sales.map((sale) => <li key={sale.id}>{sale.username} - ${sale.volume}</li>)}
   </ul>)
+}
+
+
+export async function getStaticProps() {
+  const response = await fetch('https://nextjs-demo-c6e7e-default-rtdb.asia-southeast1.firebasedatabase.app/Sales.json')
+  const data = await response.json();
+
+  console.log('data', data)
+  const transformedData = [];
+  for (let key in data) {
+    transformedData.push({ id: key, username: data[key].username, volume: data[key].volume })
+  }
+  return {
+    props: {
+      sales: transformedData
+    }
+  }
+  // })
 }
